@@ -27,7 +27,7 @@ namespace PhilippinePlaces
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IPlacesProvider, PlacesProvider>();
+            services.AddSingleton(typeof(IPlacesProvider), instance => new PlacesProvider());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

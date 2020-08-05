@@ -1,19 +1,19 @@
 ﻿namespace PhilippinePlaces.Models
 {
-    using CsvHelper.Configuration.Attributes;
+    using Newtonsoft.Json;
 
     public class RegionCsvModel
     {
-        [NameAttribute("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [NameAttribute("psgcCode")]
+        [JsonProperty("psgcCode")]
         public string PsgcCode { get; set; }
 
-        [NameAttribute("regDesc")]
+        [JsonProperty("regDesc")]
         public string Name { get; set; }
 
-        [NameAttribute("regCode")]
+        [JsonProperty("regCode")]
         public string Code { get; set; }
     }
 }

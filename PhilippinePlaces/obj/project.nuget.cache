@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "5WMXv1z6LsTy3CWWcfT5LEmox/5iDR463jRP5wqq/XRuFla9RzZcN7OB1OWm7lBVgJwuZWiwMXxjkH0ITm0JxA==",
+  "dgSpecHash": "1qtLk35FMz48xDE2rYpkokHhr4qvdKySO0Xxz0phbYjzIX6qEtM3Fk+O8vjqY/+6DKIRJ0ryftHLsl60OolLXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\NathanielHoTabin\\Desktop\\Workspace\\Test\\VS\\PhilippinePlaces\\PhilippinePlaces\\PhilippinePlaces.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\NathanielHoTabin\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\NathanielHoTabin\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",

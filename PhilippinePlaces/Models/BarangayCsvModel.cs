@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CsvHelper.Configuration.Attributes;
-
-namespace PhilippinePlaces.Models
+﻿namespace PhilippinePlaces.Models
 {
+    using Newtonsoft.Json;
+
     public class BarangayCsvModel
     {
-        [NameAttribute("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [NameAttribute("brgyDesc")]
+        [JsonProperty("brgyDesc")]
         public string Name { get; set; }
 
-        [NameAttribute("brgyCode")]
+        [JsonProperty("brgyCode")]
         public string Code { get; set; }
 
-        [NameAttribute("regCode")]
+        [JsonProperty("regCode")]
         public string RegionCode { get; set; }
 
-        [NameAttribute("provCode")]
+        [JsonProperty("provCode")]
         public string ProvinceCode { get; set; }
 
-        [NameAttribute("citymunCode")]
+        [JsonProperty("citymunCode")]
         public string CityCode { get; set; }
     }
 }

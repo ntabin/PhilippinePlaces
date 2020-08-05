@@ -5,26 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Sources\philippineLocations.json" />
+    <Content Remove="Sources\refbrgy.json" />
+    <Content Remove="Sources\refcitymun.json" />
+    <Content Remove="Sources\refprovince.json" />
+    <Content Remove="Sources\refregion.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Sources\refbrgy.csv" />
-    <None Remove="Sources\refcitymun.csv" />
-    <None Remove="Sources\refprovince.csv" />
-    <None Remove="Sources\refregion.csv" />
+    <EmbeddedResource Include="Sources\refbrgy.json" />
+    <EmbeddedResource Include="Sources\refcitymun.json" />
+    <EmbeddedResource Include="Sources\refprovince.json" />
+    <EmbeddedResource Include="Sources\refregion.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Sources\philippineLocations.json" />
-    <EmbeddedResource Include="Sources\refbrgy.csv" />
-    <EmbeddedResource Include="Sources\refcitymun.csv" />
-    <EmbeddedResource Include="Sources\refprovince.csv" />
-    <EmbeddedResource Include="Sources\refregion.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="15.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>

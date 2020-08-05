@@ -24,7 +24,6 @@
     ".NETCoreApp,Version=v3.1": {
       "PhilippinePlaces/1.0.0": {
         "dependencies": {
-          "CsvHelper": "15.0.5",
           "Newtonsoft.Json": "12.0.3",
           "System.Linq": "4.3.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
@@ -104,7 +103,7 @@
           "Microsoft.AspNetCore.StaticFiles": "3.1.0.0",
           "Microsoft.AspNetCore.WebSockets": "3.1.0.0",
           "Microsoft.AspNetCore.WebUtilities": "3.1.0.0",
-          "Microsoft.CSharp.Reference": "4.0.0.0",
+          "Microsoft.CSharp": "4.0.0.0",
           "Microsoft.Extensions.Caching.Abstractions": "3.1.0.0",
           "Microsoft.Extensions.Caching.Memory": "3.1.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.0.0",
@@ -308,21 +307,6 @@
           "PhilippinePlaces.dll": {}
         }
       },
-      "CsvHelper/15.0.5": {
-        "dependencies": {
-          "Microsoft.CSharp": "4.5.0"
-        },
-        "runtime": {
-          "lib/netstandard2.1/CsvHelper.dll": {
-            "assemblyVersion": "15.0.0.0",
-            "fileVersion": "15.0.5.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.1/CsvHelper.dll": {}
-        }
-      },
-      "Microsoft.CSharp/4.5.0": {},
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
       "Newtonsoft.Json/12.0.3": {
@@ -889,7 +873,7 @@
         },
         "compileOnly": true
       },
-      "Microsoft.CSharp.Reference/4.0.0.0": {
+      "Microsoft.CSharp/4.0.0.0": {
         "compile": {
           "Microsoft.CSharp.dll": {}
         },
@@ -2073,20 +2057,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "CsvHelper/15.0.5": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HPoE5nASoFXqoXKSi5yEBam7TzDrtC8WESA4xq53JtPKV8Mm+IKRuN+FJyMoJg1Whv/NG4JiCUs9yUcaSY/ziQ==",
-      "path": "csvhelper/15.0.5",
-      "hashPath": "csvhelper.15.0.5.nupkg.sha512"
-    },
-    "Microsoft.CSharp/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-EGoBmf3Na2ppbhPePDE9PlX81r1HuOZH5twBrq7couJZiPTjUnD3648balerQJO6EJ8Sj+43+XuRwQ7r+3tE3w==",
-      "path": "microsoft.csharp/4.5.0",
-      "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
-    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -2577,7 +2547,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.CSharp.Reference/4.0.0.0": {
+    "Microsoft.CSharp/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
