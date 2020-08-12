@@ -29,7 +29,7 @@
             var cities = this.GetCitieFromSource();
             var barangays = this.GetBarangaysFromSource();
 
-            var palces = from r in regions
+            var places = from r in regions
                              join p in provinces on r.Code equals p.RegionCode
                              join c in cities on p.Code equals c.ProvinceCode
                              join b in barangays on new { Region = r.Code, Province = p.Code, City = c.Code } equals new { Region = b.RegionCode, Province = b.ProvinceCode, City = b.CityCode }
