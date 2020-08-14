@@ -4,6 +4,8 @@ namespace PhilippinePlaces.Controllers
     using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using PhilippinePlaces.Extensions;
+    using PhilippinePlaces.Messages;
     using PhilippinePlaces.Providers;
 
     [Route("api/[controller]")]
@@ -19,48 +21,78 @@ namespace PhilippinePlaces.Controllers
         }
 
         [HttpGet]
-        [Route("")]
-        public IActionResult GetRegions([FromQuery]string regionCode = null)
+        [Route("{regionCode?}")]
+        public IActionResult GetRegions([FromQuery] GetRegionsWebRequest webRequest, string regionCode)
         {
-            var places = this.placesProvider.GetPlaces();
-            var regions = (from p in places
-                           where p.RegionCode == regionCode || regionCode == null
-                           select new
-                           {
-                               Code = p.RegionCode,
-                               Name = p.RegionName
-                           }).Distinct();
-            return new OkObjectResult(regions);
-        }
+            var regions = from r in this.placesProvider.GetRegions()
+                          where r.Code == regionCode || regionCode == null
+                          select new
+                          {
+                              Code = r.Code,
+                              Name = r.Name
+                          };
 
-        [HttpGet]
-        [Route("provinces")]
-        public IActionResult GetProvincesAndRegions()
-        {
-            var places = this.placesProvider.GetPlaces();
-            var raw = (from p in places
-                                        select new
-                                        {
-                                            RegionCode = p.RegionCode,
-                                            RegionName = p.RegionName,
-                                            ProvinceCode = p.ProvinceCode,
-                                            ProvinceName = p.ProvinceName
-                                        }).Distinct();
+            if (!webRequest.IncludeProvinces)
+            {
+                return new OkObjectResult(regions);
+            }
 
-            var regionsWithProvinces = from rp in raw
-                    select new
-                    {
-                        Code = rp.RegionCode,
-                        Name = rp.RegionName,
-                        Provinces = from province in raw
-                                    where province.RegionCode == rp.RegionCode
-                                    select new
-                                    {
-                                        Code = province.ProvinceCode,
-                                        Name = province.ProvinceName
-                                    }
-                    };
-            return new OkObjectResult(regionsWithProvinces);
+            var provinces = from r in regions
+                            select new
+                            {
+                                Code = r.Code,
+                                Name = r.Name,
+                                Provinces = this.placesProvider.GetProvinces().Where(a => a.RegionCode == regionCode).AsPlaceEntity()
+
+                            };
+
+            if (!webRequest.IncludeCities)
+            {
+                return new OkObjectResult(provinces);
+            }
+
+            var cities = from r in regions
+                         select new
+                         {
+                             Code = r.Code,
+                             Name = r.Name,
+                             Provinces = from p in this.placesProvider.GetProvinces()
+                                         where p.RegionCode == r.Code
+                                         select new
+                                         {
+                                             Code = p.Code,
+                                             Name = p.Name,
+                                             Cities = this.placesProvider.GetCities().Where(a => a.ProvinceCode == p.Code).AsPlaceEntity()
+                                         }
+                         };
+
+            if (!webRequest.IncludeBarangays)
+            {
+                return new OkObjectResult(cities);
+            }
+
+            var barangays = from r in regions
+                            select new
+                            {
+                                Code = r.Code,
+                                Name = r.Name,
+                                Provinces = from p in this.placesProvider.GetProvinces()
+                                            where p.RegionCode == r.Code
+                                            select new
+                                            {
+                                                Code = p.Code,
+                                                Name = p.Name,
+                                                Cities = from c in this.placesProvider.GetCities()
+                                                         where c.ProvinceCode == p.Code
+                                                         select new
+                                                         {
+                                                             Code = c.Code,
+                                                             Name = c.Name,
+                                                             Barangays = this.placesProvider.GetBarangays().Where(a => a.CityCode == c.Code).AsPlaceEntity()
+                                                         }
+                                            }
+                            };
+            return new OkObjectResult(barangays);
         }
     }
 }

@@ -6,93 +6,54 @@
     using System.Reflection;
     using Newtonsoft.Json;
     using PhilippinePlaces.Entities;
-    using PhilippinePlaces.Models;
 
     public class PlacesProvider : IPlacesProvider
     {
-        private readonly IEnumerable<PlaceEntity> places;
+        private readonly IEnumerable<RegionEntity> regions;
+        private readonly IEnumerable<ProvinceEntity> provinces;
+        private readonly IEnumerable<CityEntity> cities;
+        private readonly IEnumerable<BarangayEntity> barangays;
 
         public PlacesProvider()
         {
-            this.places = this.PopulatePlaceEntity();
+            this.regions = this.GetSources<RegionEntity>("PhilippinePlaces.Sources.refregion.json");
+            this.provinces = this.GetSources<ProvinceEntity>("PhilippinePlaces.Sources.refprovince.json");
+            this.cities = this.GetSources<CityEntity>("PhilippinePlaces.Sources.refcitymun.json");
+            this.barangays = this.GetSources<BarangayEntity>("PhilippinePlaces.Sources.refbrgy.json");
         }
 
-        public IEnumerable<PlaceEntity> GetPlaces()
-        {
-            return this.places;
-        }
+       
 
-        private IEnumerable<PlaceEntity> PopulatePlaceEntity()
-        {
-            var regions = this.GetRegionsFromSource();
-            var provinces = this.GetProvincesFromSource();
-            var cities = this.GetCitieFromSource();
-            var barangays = this.GetBarangaysFromSource();
-
-            var places = from r in regions
-                             join p in provinces on r.Code equals p.RegionCode
-                             join c in cities on p.Code equals c.ProvinceCode
-                             join b in barangays on new { Region = r.Code, Province = p.Code, City = c.Code } equals new { Region = b.RegionCode, Province = b.ProvinceCode, City = b.CityCode }
-                             select new PlaceEntity
-                             {
-                                 RegionCode = r.Code,
-                                 RegionName = r.Name,
-                                 ProvinceCode = p.Code,
-                                 ProvinceName = p.Name,
-                                 CityCode = c.Code,
-                                 CityName = c.Name,
-                                 BarangayCode = b.Code,
-                                 BarangayName = b.Name
-                             };
-            return places;
-        }
-
-        private IEnumerable<RegionCsvModel> GetRegionsFromSource()
+        private IEnumerable<T> GetSources<T>(string embeddedResource)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("PhilippinePlaces.Sources.refregion.json"))
+            using (Stream stream = assembly.GetManifestResourceStream(embeddedResource))
             using (var reader = new StreamReader(stream))
             {
 
                 string result = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IEnumerable<RegionCsvModel>>(result);
+                return JsonConvert.DeserializeObject<IEnumerable<T>>(result);
             }
         }
 
-        private IEnumerable<ProvinceCsvModel> GetProvincesFromSource()
+        public IEnumerable<RegionEntity> GetRegions()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("PhilippinePlaces.Sources.refprovince.json"))
-            using (var reader = new StreamReader(stream))
-            {
-
-                string result = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IEnumerable<ProvinceCsvModel>>(result);
-            }
+            return this.regions;
         }
 
-        private IEnumerable<CityCsvModel> GetCitieFromSource()
+        public IEnumerable<ProvinceEntity> GetProvinces()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("PhilippinePlaces.Sources.refcitymun.json"))
-            using (var reader = new StreamReader(stream))
-            {
-
-                string result = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IEnumerable<CityCsvModel>>(result);
-            }
+            return this.provinces;
         }
 
-        private IEnumerable<BarangayCsvModel> GetBarangaysFromSource()
+        public IEnumerable<CityEntity> GetCities()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("PhilippinePlaces.Sources.refbrgy.json"))
-            using (var reader = new StreamReader(stream))
-            {
+            return this.cities;
+        }
 
-                string result = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IEnumerable<BarangayCsvModel>>(result);
-            }
+        public IEnumerable<BarangayEntity> GetBarangays()
+        {
+            return this.barangays;
         }
     }
 }

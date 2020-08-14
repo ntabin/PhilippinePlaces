@@ -5,6 +5,12 @@
 
     public interface IPlacesProvider
     {
-        public IEnumerable<PlaceEntity> GetPlaces();
+        public IEnumerable<RegionEntity> GetRegions();
+
+        public IEnumerable<ProvinceEntity> GetProvinces();
+
+        public IEnumerable<CityEntity> GetCities();
+
+        public IEnumerable<BarangayEntity> GetBarangays();
     }
 }

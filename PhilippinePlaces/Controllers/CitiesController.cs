@@ -21,14 +21,15 @@
 
         [ServiceFilter(typeof(ValidateModelStateAttribute))]
         [HttpGet]
+        [Route("")]
         public IActionResult GetCities([FromQuery] GetCitiesWebRequest webRequest)
         {
-            var cities = (from p in this.placesProvider.GetPlaces()
-                          where p.ProvinceCode == webRequest.ProvinceCode
+            var cities = (from p in this.placesProvider.GetCities()
+                          where p.ProvinceCode == webRequest.Province
                           select new
                           {
-                              Code = p.CityCode,
-                              Name = p.CityName
+                              Code = p.Code,
+                              Name = p.Name
                           }).Distinct();
             return new OkObjectResult(cities);
         }

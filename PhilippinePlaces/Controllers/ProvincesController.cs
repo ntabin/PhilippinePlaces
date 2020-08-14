@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using PhilippinePlaces.Messages;
     using PhilippinePlaces.Providers;
 
     [Route("api/[controller]")]
@@ -17,14 +18,14 @@
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetProvinces([FromQuery] string region = null)
+        public IActionResult GetProvinces([FromQuery] GetProvincesWebRequest webRequest)
         {
-            var provinces = (from p in this.placesProvider.GetPlaces()
-                             where p.RegionCode == region || region == null
+            var provinces = (from p in this.placesProvider.GetProvinces()
+                             where p.RegionCode == webRequest.Region
                              select new
                              {
-                                 Code = p.ProvinceCode,
-                                 Name = p.ProvinceName
+                                 Code = p.Code,
+                                 Name = p.Name
                              }).Distinct();
             return new OkObjectResult(provinces);
         }

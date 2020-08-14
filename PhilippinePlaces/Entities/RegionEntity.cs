@@ -1,8 +1,8 @@
-﻿namespace PhilippinePlaces.Models
+﻿namespace PhilippinePlaces.Entities
 {
     using Newtonsoft.Json;
 
-    public class RegionCsvModel
+    public class RegionEntity : Place
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -11,9 +11,9 @@
         public string PsgcCode { get; set; }
 
         [JsonProperty("regDesc")]
-        public string Name { get; set; }
+        public override string Name { get; set; }
 
         [JsonProperty("regCode")]
-        public string Code { get; set; }
+        public override string Code { get; set; }
     }
 }

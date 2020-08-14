@@ -1,17 +1,17 @@
-﻿namespace PhilippinePlaces.Models
+﻿namespace PhilippinePlaces.Entities
 {
     using Newtonsoft.Json;
 
-    public class BarangayCsvModel
+    public class BarangayEntity : Place
     {
         [JsonProperty("id")]
         public int Id { get; set; }
 
         [JsonProperty("brgyDesc")]
-        public string Name { get; set; }
+        public override string Name { get; set; }
 
         [JsonProperty("brgyCode")]
-        public string Code { get; set; }
+        public override string Code { get; set; }
 
         [JsonProperty("regCode")]
         public string RegionCode { get; set; }

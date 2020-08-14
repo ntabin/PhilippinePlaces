@@ -3,10 +3,10 @@
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
 
-    public class GetCitiesWebRequest
+    public class GetBarangaysWebRequest
     {
-        [JsonProperty("province")]
+        [JsonProperty("city")]
         [Required]
-        public string Province { get; set; }
+        public string City { get; set; }
     }
 }
