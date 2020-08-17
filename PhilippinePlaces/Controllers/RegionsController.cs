@@ -5,6 +5,7 @@ namespace PhilippinePlaces.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using PhilippinePlaces.Extensions;
+    using PhilippinePlaces.Filters;
     using PhilippinePlaces.Messages;
     using PhilippinePlaces.Providers;
 
@@ -20,12 +21,13 @@ namespace PhilippinePlaces.Controllers
             this.placesProvider = placesProvider;
         }
 
+        [ServiceFilter(typeof(ValidateModelStateAttribute))]
         [HttpGet]
-        [Route("{regionCode?}")]
-        public IActionResult GetRegions([FromQuery] GetRegionsWebRequest webRequest, string regionCode)
+        [Route("")]
+        public IActionResult GetRegions([FromQuery] GetRegionsWebRequest webRequest)
         {
             var regions = from r in this.placesProvider.GetRegions()
-                          where r.Code == regionCode || regionCode == null
+                          where r.Code == webRequest.Region || webRequest.Region == null
                           select new
                           {
                               Code = r.Code,
@@ -42,7 +44,7 @@ namespace PhilippinePlaces.Controllers
                             {
                                 Code = r.Code,
                                 Name = r.Name,
-                                Provinces = this.placesProvider.GetProvinces().Where(a => a.RegionCode == regionCode).AsPlaceEntity()
+                                Provinces = this.placesProvider.GetProvinces().Where(a => a.RegionCode == r.Code).AsPlaceEntity()
 
                             };
 

@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using PhilippinePlaces.Extensions;
     using PhilippinePlaces.Filters;
     using PhilippinePlaces.Messages;
     using PhilippinePlaces.Providers;
@@ -24,14 +25,21 @@
         [Route("")]
         public IActionResult GetCities([FromQuery] GetCitiesWebRequest webRequest)
         {
-            var cities = (from p in this.placesProvider.GetCities()
-                          where p.ProvinceCode == webRequest.Province
-                          select new
-                          {
-                              Code = p.Code,
-                              Name = p.Name
-                          }).Distinct();
-            return new OkObjectResult(cities);
+            var cities = this.placesProvider.GetCities().Where(a => a.ProvinceCode == webRequest.Province).AsPlaceEntity();
+            if (!webRequest.IncludeBarangays)
+            {
+                return new OkObjectResult(cities);
+            }
+
+            var barangays = from c in cities
+                            select new { 
+                                Code = c.Code,
+                                Name = c.Name,
+                                Barangays = this.placesProvider.GetBarangays().Where(a => a.CityCode == c.Code).AsPlaceEntity()
+                            };
+
+            return new OkObjectResult(barangays);
+
         }
     }
 }

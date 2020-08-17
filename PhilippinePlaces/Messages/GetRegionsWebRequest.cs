@@ -14,5 +14,8 @@ namespace PhilippinePlaces.Messages
 
         [JsonProperty("includeBarangays")]
         public bool IncludeBarangays { get; set; } = false;
+
+        [JsonProperty("region")]
+        public string Region { get;set; }
     }
 }

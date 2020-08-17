@@ -27,7 +27,7 @@ namespace PhilippinePlaces
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             var placesProvider = new PlacesProvider();
             services.AddSingleton<IPlacesProvider>(placesProvider);
             services.AddScoped<ValidateModelStateAttribute>();

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PhilippinePlaces.Filters;
-using PhilippinePlaces.Messages;
-using PhilippinePlaces.Providers;
-
-namespace PhilippinePlaces.Controllers
+﻿namespace PhilippinePlaces.Controllers
 {
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using PhilippinePlaces.Extensions;
+    using PhilippinePlaces.Filters;
+    using PhilippinePlaces.Messages;
+    using PhilippinePlaces.Providers;
+
     [Route("api/[controller]")]
     [ApiController]
     public class BarangaysController : ControllerBase
@@ -24,16 +21,10 @@ namespace PhilippinePlaces.Controllers
         [ServiceFilter(typeof(ValidateModelStateAttribute))]
         [HttpGet]
         [Route("")]
-        public IActionResult GetCities([FromQuery] GetBarangaysWebRequest webRequest)
+        public IActionResult GetBarangays([FromQuery] GetBarangaysWebRequest webRequest)
         {
-            var cities = (from p in this.placesProvider.GetBarangays()
-                          where p.CityCode == webRequest.City
-                          select new
-                          {
-                              Code = p.Code,
-                              Name = p.Name
-                          }).Distinct();
-            return new OkObjectResult(cities);
+            var barangays = this.placesProvider.GetBarangays().Where(a => a.CityCode == webRequest.City).AsPlaceEntity();
+            return new OkObjectResult(barangays);
         }
     }
 }
