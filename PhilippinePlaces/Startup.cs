@@ -28,6 +28,14 @@ namespace PhilippinePlaces
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Test API",
+                    Description = "ASP.NET Core Web API"
+                });
+            });
             var placesProvider = new PlacesProvider();
             services.AddSingleton<IPlacesProvider>(placesProvider);
             services.AddScoped<ValidateModelStateAttribute>();
@@ -50,6 +58,10 @@ namespace PhilippinePlaces
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
             });
         }
     }
