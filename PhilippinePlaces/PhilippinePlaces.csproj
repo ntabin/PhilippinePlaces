@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\**" />
-    <Content Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Sources\refbrgy.json" />
     <Content Remove="Sources\refcitymun.json" />
     <Content Remove="Sources\refprovince.json" />

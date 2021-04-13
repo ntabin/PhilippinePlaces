@@ -1,12 +1,13 @@
-﻿
-namespace PhilippinePlaces.Controllers
+﻿namespace PhilippinePlaces.Controllers
 {
     using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using PhilippinePlaces.Entities;
     using PhilippinePlaces.Extensions;
     using PhilippinePlaces.Filters;
     using PhilippinePlaces.Messages;
+    using PhilippinePlaces.Models;
     using PhilippinePlaces.Providers;
 
     [Route("api/[controller]")]
@@ -28,7 +29,7 @@ namespace PhilippinePlaces.Controllers
         {
             var regions = from r in this.placesProvider.GetRegions()
                           where r.Code == webRequest.Region || webRequest.Region == null
-                          select new
+                          select new PlaceEntity
                           {
                               Code = r.Code,
                               Name = r.Name
@@ -40,12 +41,11 @@ namespace PhilippinePlaces.Controllers
             }
 
             var provinces = from r in regions
-                            select new
+                            select new RegionWithProvincesWebModel
                             {
                                 Code = r.Code,
                                 Name = r.Name,
-                                Provinces = this.placesProvider.GetProvinces().Where(a => a.RegionCode == r.Code).AsPlaceEntity()
-
+                                Provinces = this.placesProvider.GetProvinces().Where(a => a.RegionCode == r.Code).AsModel()
                             };
 
             if (!webRequest.IncludeCities)
@@ -54,17 +54,17 @@ namespace PhilippinePlaces.Controllers
             }
 
             var cities = from r in regions
-                         select new
+                         select new RegionWithProvincesAndCitiesWebModel
                          {
                              Code = r.Code,
                              Name = r.Name,
                              Provinces = from p in this.placesProvider.GetProvinces()
                                          where p.RegionCode == r.Code
-                                         select new
+                                         select new ProvinceWithCitiesWebModel
                                          {
                                              Code = p.Code,
                                              Name = p.Name,
-                                             Cities = this.placesProvider.GetCities().Where(a => a.ProvinceCode == p.Code).AsPlaceEntity()
+                                             Cities = this.placesProvider.GetCities().Where(a => a.ProvinceCode == p.Code).AsModel()
                                          }
                          };
 
@@ -86,11 +86,11 @@ namespace PhilippinePlaces.Controllers
                                                 Name = p.Name,
                                                 Cities = from c in this.placesProvider.GetCities()
                                                          where c.ProvinceCode == p.Code
-                                                         select new
+                                                         select new CityWithBarangaysWebModel
                                                          {
                                                              Code = c.Code,
                                                              Name = c.Name,
-                                                             Barangays = this.placesProvider.GetBarangays().Where(a => a.CityCode == c.Code).AsPlaceEntity()
+                                                             Barangays = this.placesProvider.GetBarangays().Where(a => a.CityCode == c.Code).AsModel()
                                                          }
                                             }
                             };

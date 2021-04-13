@@ -22,8 +22,6 @@
             this.barangays = this.GetSources<BarangayEntity>("PhilippinePlaces.Sources.refbrgy.json");
         }
 
-       
-
         private IEnumerable<T> GetSources<T>(string embeddedResource)
         {
             var assembly = Assembly.GetExecutingAssembly();

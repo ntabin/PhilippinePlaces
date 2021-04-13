@@ -1,6 +1,4 @@
-﻿
-
-namespace PhilippinePlaces.Messages
+﻿namespace PhilippinePlaces.Messages
 {
     using Newtonsoft.Json;
 
